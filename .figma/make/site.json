@@ -1,0 +1,11 @@
+{
+  "title": "JCA",
+  "description": "Explore and interact with the content provided to discover its purpose and value.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
