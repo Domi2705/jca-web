@@ -19,7 +19,8 @@ import intiLogo from "./assets/credentials/brands/inti.png"
 import carestreamLogo from "./assets/credentials/brands/carestream.png"
 import magnafluxLogo from "./assets/credentials/brands/magnaflux.png"
 import jcaLogo from "./assets/jca-logo.png"
-import linkedinIcon from "./assets/linkedin-icon.png"
+import linkedinIcon from "./assets/linkedin-icono-01.png"
+import whatsappIcon from "./assets/wp-icono-01.png"
 
 type ServiceSection = {
   title: string
@@ -362,12 +363,13 @@ function MailIcon() {
 
 function LinkedInIcon() {
   return (
-    <img
+    <span
       className="contact-social-icon"
-      src={linkedinIcon}
-      alt=""
-      width="118"
-      height="118"
+      aria-hidden="true"
+      style={{
+        maskImage: `url(${linkedinIcon})`,
+        WebkitMaskImage: `url(${linkedinIcon})`,
+      }}
     />
   )
 }
@@ -842,15 +844,13 @@ export default function App() {
 
         <section className="stack contact-section" id="contacto" data-stack="0">
           <div className="container contact-wrap">
+            <p className="eyebrow eyebrow-light contact-eyebrow">Contacto</p>
             <div className="contact-intro">
               <div className="contact-heading">
-                <p className="eyebrow eyebrow-light">Contacto</p>
                 <h2>
                   <SplitText text="Hablemos de tu proyecto" />
                 </h2>
               </div>
-            </div>
-            <div className="contact-panel">
               <div className="contact-card-main">
                 <div className="contact-card-copy">
                   <p>
@@ -872,6 +872,33 @@ export default function App() {
                   Solicitar cotización <ArrowIcon />
                 </a>
               </div>
+
+              <div className="contact-meta contact-row">
+                <a
+                  className="contact-detail contact-detail--link"
+                  href={`mailto:${contact.email}`}
+                >
+                  <span className="contact-row__icon"><MailIcon /></span>
+                  <p>
+                    <span>Correo</span>
+                    <strong>{contact.email}</strong>
+                  </p>
+                </a>
+                <a
+                  className="contact-detail contact-detail--link"
+                  href="https://www.linkedin.com/company/jcaensayosnodestructivos/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="contact-row__icon contact-row__icon--brand"><LinkedInIcon /></span>
+                  <p>
+                    <span>LinkedIn</span>
+                    <strong>JCA Ensayos No Destructivos</strong>
+                  </p>
+                </a>
+              </div>
+            </div>
+            <div className="contact-panel">
               <div className="contact-map">
                 <div className="contact-map__viewport">
                   <iframe
@@ -900,30 +927,6 @@ export default function App() {
                   </a>
                 </div>
               </div>
-              <div className="contact-meta contact-row">
-                <a
-                  className="contact-detail contact-detail--link"
-                  href={`mailto:${contact.email}`}
-                >
-                  <span className="contact-row__icon"><MailIcon /></span>
-                  <p>
-                    <span>Correo</span>
-                    <strong>{contact.email}</strong>
-                  </p>
-                </a>
-                <a
-                  className="contact-detail contact-detail--link"
-                  href="https://www.linkedin.com/company/jcaensayosnodestructivos/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="contact-row__icon"><LinkedInIcon /></span>
-                  <p>
-                    <span>LinkedIn</span>
-                    <strong>JCA Ensayos No Destructivos</strong>
-                  </p>
-                </a>
-              </div>
             </div>
           </div>
         </section>
@@ -931,9 +934,10 @@ export default function App() {
 
       <footer className="site-footer">
         <div className="container footer-main">
-          <p className="footer-service">
-            Ensayos no destructivos e inspecciones
-          </p>
+          <div className="footer-signature">
+            <a className="footer-name" href="#inicio">JCA &amp; Asociados</a>
+            <p className="footer-service">Ensayos no destructivos e inspecciones</p>
+          </div>
           <p className="footer-location">Quilmes, Buenos Aires, Argentina</p>
         </div>
       </footer>
@@ -945,10 +949,14 @@ export default function App() {
         rel="noopener noreferrer"
         aria-label="Consultar por WhatsApp"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5l1.4-4.4a8.4 8.4 0 1 1 15.6-4.4Z" />
-          <path d="M8.4 7.6c.2-.4.4-.4.7-.4h.5c.2 0 .4 0 .5.4l.8 1.8c.1.2.1.4-.1.6l-.6.8c-.2.2-.1.4 0 .6.6 1 1.4 1.8 2.5 2.3.2.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l1.8.8c.2.1.4.2.4.4 0 .3-.2 1.3-.8 1.8-.5.5-1.3.8-2.1.7-1.1-.1-2.8-.7-4.8-2.4-1.6-1.4-2.7-3.2-3-4.4-.3-.9 0-1.7.3-2.2l.9-.8" />
-        </svg>
+        <span
+          className="whatsapp-float__icon"
+          aria-hidden="true"
+          style={{
+            maskImage: `url(${whatsappIcon})`,
+            WebkitMaskImage: `url(${whatsappIcon})`,
+          }}
+        />
       </a>
 
       {activeService && (
