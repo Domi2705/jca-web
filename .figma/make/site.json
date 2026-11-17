@@ -1,11 +1,12 @@
 {
-  "title": "JCA",
+  "title": "JCA & Asociados | Ensayos no destructivos e inspección industrial",
+  "language": "es-AR",
   "icons": {
     "icon": "/favicon-jca.jpg?v=2"
   },
-  "description": "Explore and interact with the content provided to discover its purpose and value.",
+  "description": "Ensayos no destructivos e inspección industrial: radiografía, ultrasonido, líquidos penetrantes, partículas magnetizables, laboratorio y drones. Quilmes, Buenos Aires.",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,

@@ -108,7 +108,9 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
   const bodyStart = config.customScripts?.bodyStart ?? ""
   const bodyEnd = config.customScripts?.bodyEnd ?? ""
   const robotsTxt =
-    config.robots?.index === false ? "User-agent: *\nDisallow: /\n" : ""
+    config.robots?.index === false
+      ? "User-agent: *\nDisallow: /\n"
+      : "User-agent: *\nAllow: /\n\nSitemap: https://ndtantonelli.com.ar/sitemap.xml\n"
 
   return {
     name: "figma-site-configuration",

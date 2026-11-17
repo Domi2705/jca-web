@@ -1,12 +1,22 @@
 import { Fragment, useEffect, useRef, useState } from "react"
 import type { KeyboardEvent as ReactKeyboardEvent } from "react"
-import heroImage from "./assets/hero-ultrasonido.webp"
+import heroVaso from "./assets/hero-vaso-presion.png"
+import heroSeparador from "./assets/hero-separador.png"
+import heroUltravioleta from "./assets/hero-inspeccion-ultravioleta.png"
 import imgRadiografia from "./assets/services/recipiente.jpg"
-import imgPenetrantes from "./assets/services/penetrantes.jpg"
+import imgPenetrantes from "./assets/services/liquidos-penetrantes.png"
 import imgParticulas from "./assets/services/particulas.jpg"
-import imgUltrasonido from "./assets/services/canerias.jpg"
+import imgUltrasonido from "./assets/services/ultrasonido.png"
+import imgUltrasonido2 from "./assets/services/ultrasonido-2.png"
+import imgUltrasonidoInspeccion from "./assets/services/ultrasonido-inspeccion.jpg"
 import imgLaboratorio from "./assets/services/lab.jpg"
+import laboratorio1 from "./assets/services/laboratorio-1.png"
+import laboratorio2 from "./assets/services/laboratorio-2.png"
+import laboratorio3 from "./assets/services/laboratorio-3.png"
+import laboratorio4 from "./assets/services/laboratorio-4.png"
 import imgDrones from "./assets/services/drones.png"
+import imgVisual1 from "./assets/services/visual-1.png"
+import imgVisual2 from "./assets/services/visual-2.png"
 import prjSlug from "./assets/projects/slug-catchers.webp"
 import prjCompresoras from "./assets/projects/plantas-compresoras.webp"
 import prjTrampas from "./assets/projects/trampas-anelo.webp"
@@ -20,7 +30,6 @@ import intiLogo from "./assets/credentials/brands/inti.png"
 import carestreamLogo from "./assets/credentials/brands/carestream.png"
 import magnafluxLogo from "./assets/credentials/brands/magnaflux.png"
 import jcaLogo from "./assets/jca-logo.png"
-import linkedinIcon from "./assets/linkedin-icono-01.png"
 import whatsappIcon from "./assets/wp-icono-01.png"
 
 type ServiceSection = {
@@ -37,6 +46,7 @@ type Service = {
   sections?: ServiceSection[]
   images: {
     current: string
+    gallery?: { src: string; alt: string }[]
     final: string[]
   }
   status: "original"
@@ -127,6 +137,10 @@ const services: Service[] = [
       "Detección de falla en soldaduras y materiales mediante ultrasonido convencional. Medición y mapeo de espesores en cañerías, recipientes e instalaciones, para evaluar espesores remanentes y pérdidas de material.",
     images: {
       current: imgUltrasonido,
+      gallery: [
+        { src: imgUltrasonido2, alt: "Ensayo de ultrasonido con palpador sobre una pieza metálica" },
+        { src: imgUltrasonidoInspeccion, alt: "Inspección de una pieza industrial con equipo de ultrasonido" },
+      ],
       final: [
         "Inspección por ultrasonidos detección de fallas sobre soldaduras de recipientes.jpg",
         "Mapeo de espesores.jpeg",
@@ -161,6 +175,12 @@ const services: Service[] = [
     ],
     images: {
       current: imgLaboratorio,
+      gallery: [
+        { src: laboratorio1, alt: "Control de iluminación y tiempo de ensayo sobre una probeta de soldadura" },
+        { src: laboratorio2, alt: "Probeta de soldadura a tope preparada para inspección" },
+        { src: laboratorio3, alt: "Probeta de soldadura en ángulo con marcas de inspección" },
+        { src: laboratorio4, alt: "Inspección fluorescente de piezas bajo luz ultravioleta" },
+      ],
       // Fotografías definitivas pendientes (dureza/rugosidad y laboratorio).
       final: [
         "BANCO PARA INSPECCIÓN PARTÍCULAS MAGNETIZABLES - PM - MT - CAPACIDAD 2500 A - LONGITUD ENTRE PUNTAS 1500 mm- MARCA AEROPLATA ARGENTINA S.A..png",
@@ -178,6 +198,11 @@ const services: Service[] = [
       "Inspección visual directa e indirecta mediante boroscopio y drones. Inspección de soldaduras, componentes e instalaciones durante fabricación, montaje y mantenimiento. Evaluación y registro de condiciones superficiales y discontinuidades visibles por inspectores de soldaduras certificados según IRAM IAS U500-169. Relevamientos visuales, fotografía y video de instalaciones industriales, techos y estructuras. Inspección de instalaciones fotovoltaicas. Relevamientos visuales y servicios de termografía mediante profesionales y equipamiento especializado, previa evaluación del alcance.",
     images: {
       current: imgDrones,
+      gallery: [
+        { src: imgDrones, alt: "Relevamiento aéreo con dron de una obra de cañerías industriales" },
+        { src: imgVisual1, alt: "Inspección visual de cañerías e instalaciones industriales" },
+        { src: imgVisual2, alt: "Inspección visual del interior de una cañería y su soldadura" },
+      ],
       final: [
         "Inspección visual directa",
         "Inspección visual indirecta mediante boroscopio",
@@ -364,14 +389,11 @@ function MailIcon() {
 
 function LinkedInIcon() {
   return (
-    <span
-      className="contact-social-icon"
-      aria-hidden="true"
-      style={{
-        maskImage: `url(${linkedinIcon})`,
-        WebkitMaskImage: `url(${linkedinIcon})`,
-      }}
-    />
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M7 10v7M11 17v-7M11 13a3 3 0 0 1 6 0v4" />
+      <circle cx="7" cy="7" r="0.5" />
+    </svg>
   )
 }
 
@@ -484,6 +506,9 @@ function ServiceModal({
         >
           <span aria-hidden="true">×</span>
         </button>
+        {service.images.gallery ? (
+          <ImageCarousel slides={service.images.gallery} className="modal-image hero-slideshow modal-slideshow" label={`Imágenes de ${service.title}`} />
+        ) : (
         <div className="modal-image">
           <img
             src={service.images.current}
@@ -492,6 +517,7 @@ function ServiceModal({
             height="500"
           />
         </div>
+        )}
         <div className="modal-copy">
           <p className="eyebrow">Detalle del servicio</p>
           <h2 id="modal-title">{service.title}</h2>
@@ -515,6 +541,69 @@ function ServiceModal({
             <p>{service.description}</p>
           )}
         </div>
+      </div>
+    </div>
+  )
+}
+
+const heroSlides = [
+  { src: heroVaso, alt: "Vaso de presión industrial en taller" },
+  { src: heroSeparador, alt: "Separador de acero en taller industrial" },
+  { src: heroUltravioleta, alt: "Inspección ultravioleta de un cigüeñal" },
+]
+
+function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slideshow", label = "Inspecciones industriales" }: {
+  slides?: { src: string; alt: string }[]
+  className?: string
+  label?: string
+}) {
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (motion.matches) setPaused(true)
+    const onMotionChange = () => { if (motion.matches) setPaused(true) }
+    motion.addEventListener("change", onMotionChange)
+    return () => motion.removeEventListener("change", onMotionChange)
+  }, [])
+
+  useEffect(() => {
+    if (paused) return
+    const timer = window.setInterval(() => {
+      if (!document.hidden) setActive((index) => (index + 1) % slides.length)
+    }, 5000)
+    return () => window.clearInterval(timer)
+  }, [paused, active, slides.length])
+
+  return (
+    <div className={className} role="region" aria-roledescription="carrusel" aria-label={label}>
+      {slides.map((slide, index) => (
+        <img
+          key={slide.src}
+          src={slide.src}
+          alt={slide.alt}
+          className={`hero-slide${active === index ? " is-active" : ""}`}
+          aria-hidden={active !== index}
+          fetchPriority={index === 0 ? "high" : "auto"}
+          decoding="async"
+        />
+      ))}
+      <div className="hero-slide-controls">
+        <div className="hero-slide-dots" aria-label="Elegir imagen">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.src}
+              type="button"
+              aria-label={`Ver imagen ${index + 1}: ${slide.alt}`}
+              aria-current={active === index ? "true" : undefined}
+              onClick={() => setActive(index)}
+            ><span /></button>
+          ))}
+        </div>
+        <button className="hero-slide-toggle" type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Reanudar imágenes" : "Pausar imágenes"}>
+          {paused ? "▶" : "Ⅱ"}
+        </button>
       </div>
     </div>
   )
@@ -685,14 +774,7 @@ export default function App() {
                 Solicitar cotización <ArrowIcon />
               </a>
             </div>
-            <div className="hero-image">
-              <img
-                src={heroImage}
-                alt="Inspección industrial de una pieza mediante equipo de ultrasonido"
-                width="1478"
-                height="1064"
-              />
-            </div>
+            <ImageCarousel />
           </div>
         </section>
 
@@ -891,7 +973,7 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <span className="contact-row__icon contact-row__icon--brand"><LinkedInIcon /></span>
+                  <span className="contact-row__icon"><LinkedInIcon /></span>
                   <p>
                     <span>LinkedIn</span>
                     <strong>JCA Ensayos No Destructivos</strong>
