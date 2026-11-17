@@ -6,6 +6,7 @@ import imgPenetrantes from "./assets/services/penetrantes.jpg"
 import imgParticulas from "./assets/services/particulas.jpg"
 import imgUltrasonido from "./assets/services/canerias.jpg"
 import imgLaboratorio from "./assets/services/lab.jpg"
+import imgDrones from "./assets/services/drones.png"
 import prjSlug from "./assets/projects/slug-catchers.webp"
 import prjCompresoras from "./assets/projects/plantas-compresoras.webp"
 import prjTrampas from "./assets/projects/trampas-anelo.webp"
@@ -176,7 +177,7 @@ const services: Service[] = [
     description:
       "Inspección visual directa e indirecta mediante boroscopio y drones. Inspección de soldaduras, componentes e instalaciones durante fabricación, montaje y mantenimiento. Evaluación y registro de condiciones superficiales y discontinuidades visibles por inspectores de soldaduras certificados según IRAM IAS U500-169. Relevamientos visuales, fotografía y video de instalaciones industriales, techos y estructuras. Inspección de instalaciones fotovoltaicas. Relevamientos visuales y servicios de termografía mediante profesionales y equipamiento especializado, previa evaluación del alcance.",
     images: {
-      current: placeholderImage,
+      current: imgDrones,
       final: [
         "Inspección visual directa",
         "Inspección visual indirecta mediante boroscopio",

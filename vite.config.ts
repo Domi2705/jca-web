@@ -160,7 +160,7 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
             injectTo: "head",
           })
         }
-        if (favicon) {
+        if (favicon && !/<link\b[^>]*\brel\s*=\s*["']icon["']/i.test(result)) {
           tags.push({
             tag: "link",
             attrs: { rel: "icon", href: favicon },
