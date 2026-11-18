@@ -507,10 +507,12 @@ function ServiceModal({
           <span aria-hidden="true">×</span>
         </button>
         {service.images.gallery ? (
-          <ImageCarousel slides={service.images.gallery} className="modal-image hero-slideshow modal-slideshow" label={`Imágenes de ${service.title}`} />
+          <ImageCarousel slides={service.images.gallery} className="modal-image hero-slideshow modal-slideshow" label={`Imágenes de ${service.title}`} modal />
         ) : (
         <div className="modal-image">
+          <img className="modal-image-background" src={service.images.current} alt="" aria-hidden="true" />
           <img
+            className="modal-image-foreground"
             src={service.images.current}
             alt={imageAlt}
             width="800"
@@ -552,33 +554,28 @@ const heroSlides = [
   { src: heroUltravioleta, alt: "Inspección ultravioleta de un cigüeñal" },
 ]
 
-function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slideshow", label = "Inspecciones industriales" }: {
+function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slideshow", label = "Inspecciones industriales", modal = false }: {
   slides?: { src: string; alt: string }[]
   className?: string
   label?: string
+  modal?: boolean
 }) {
   const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
-
   useEffect(() => {
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (motion.matches) setPaused(true)
-    const onMotionChange = () => { if (motion.matches) setPaused(true) }
-    motion.addEventListener("change", onMotionChange)
-    return () => motion.removeEventListener("change", onMotionChange)
-  }, [])
-
-  useEffect(() => {
-    if (paused) return
     const timer = window.setInterval(() => {
       if (!document.hidden) setActive((index) => (index + 1) % slides.length)
     }, 5000)
     return () => window.clearInterval(timer)
-  }, [paused, active, slides.length])
+  }, [active, slides.length])
 
   return (
     <div className={className} role="region" aria-roledescription="carrusel" aria-label={label}>
-      {slides.map((slide, index) => (
+      {modal ? slides.map((slide, index) => (
+        <div key={slide.src} className={`modal-slide${active === index ? " is-active" : ""}`} aria-hidden={active !== index}>
+          <img className="modal-image-background" src={slide.src} alt="" aria-hidden="true" />
+          <img className="modal-image-foreground" src={slide.src} alt={slide.alt} decoding="async" />
+        </div>
+      )) : slides.map((slide, index) => (
         <img
           key={slide.src}
           src={slide.src}
@@ -589,7 +586,12 @@ function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slide
           decoding="async"
         />
       ))}
-      <div className="hero-slide-controls">
+      {modal ? (
+        <div className="modal-slide-controls">
+          <button type="button" aria-label="Imagen anterior" onClick={() => setActive((index) => (index - 1 + slides.length) % slides.length)}><span aria-hidden="true">‹</span></button>
+          <button type="button" aria-label="Imagen siguiente" onClick={() => setActive((index) => (index + 1) % slides.length)}><span aria-hidden="true">›</span></button>
+        </div>
+      ) : <div className="hero-slide-controls">
         <div className="hero-slide-dots" aria-label="Elegir imagen">
           {slides.map((slide, index) => (
             <button
@@ -601,10 +603,7 @@ function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slide
             ><span /></button>
           ))}
         </div>
-        <button className="hero-slide-toggle" type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Reanudar imágenes" : "Pausar imágenes"}>
-          {paused ? "▶" : "Ⅱ"}
-        </button>
-      </div>
+      </div>}
     </div>
   )
 }

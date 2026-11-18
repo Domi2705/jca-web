@@ -893,15 +893,75 @@ html {
 }
 
 .modal-image {
+  position: sticky;
+  top: 0;
+  align-self: stretch;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   min-height: 0;
   min-width: 0;
-  background: #ddd;
+  background: #202020;
 }
 
-.modal-image img {
+.modal-image .modal-image-background {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(35px) brightness(0.5);
+  transform: scale(1.2);
+}
+
+.modal-image .modal-image-foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgb(0 0 0 / 35%));
+}
+
+.modal-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+
+.modal-slide.is-active {
+  opacity: 1;
+}
+
+.modal-slide-controls {
+  position: absolute;
+  inset: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.modal-slide-controls button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 75%);
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.modal-slide-controls button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
 }
 
 .modal-copy {
@@ -1063,7 +1123,8 @@ html {
   }
 
   .modal-image {
-    height: clamp(130px, 24dvh, 210px);
+    height: auto;
+    aspect-ratio: 4 / 3;
     min-height: 0;
     flex: none;
   }
@@ -1668,8 +1729,11 @@ body {
 }
 
 .modal-slideshow > .hero-slide {
-  object-fit: contain;
-  padding-bottom: 64px;
+  object-fit: cover;
+}
+
+.modal-image.hero-slideshow {
+  position: sticky;
 }
 
 .hero-slide-controls {
@@ -1686,8 +1750,7 @@ body {
   display: flex;
 }
 
-.hero-slide-dots button,
-.hero-slide-toggle {
+.hero-slide-dots button {
   display: grid;
   place-items: center;
   width: 44px;
@@ -1718,7 +1781,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-slideshow > .hero-slide {
+  .hero-slideshow > .hero-slide,
+  .modal-slide {
     transition: none;
   }
 }
