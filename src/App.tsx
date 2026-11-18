@@ -9,7 +9,7 @@ import imgParticulas from "./assets/services/particulas.jpg"
 import imgUltrasonido from "./assets/services/ultrasonido.webp"
 import imgUltrasonido2 from "./assets/services/ultrasonido-2.webp"
 import imgUltrasonidoInspeccion from "./assets/services/ultrasonido-inspeccion.webp"
-import imgLaboratorio from "./assets/services/lab.jpg"
+import imgLaboratorio from "./assets/services/laboratorio-card.webp"
 import laboratorio1 from "./assets/services/laboratorio-1.webp"
 import laboratorio2 from "./assets/services/laboratorio-2.webp"
 import laboratorio3 from "./assets/services/laboratorio-3.webp"
@@ -149,7 +149,7 @@ const services: Service[] = [
     status: "original",
   },
   {
-    title: "Laboratorio y controles",
+    title: "Laboratorio de ensayos no destructivos",
     code: "",
     teaser:
       "Ensayos de probetas y piezas especiales en laboratorio, y medición de dureza y rugosidad.",
@@ -561,12 +561,22 @@ function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slide
   modal?: boolean
 }) {
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
   useEffect(() => {
+    if (modal) return
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (motion.matches) setPaused(true)
+    const onMotionChange = () => { if (motion.matches) setPaused(true) }
+    motion.addEventListener("change", onMotionChange)
+    return () => motion.removeEventListener("change", onMotionChange)
+  }, [modal])
+  useEffect(() => {
+    if (paused) return
     const timer = window.setInterval(() => {
       if (!document.hidden) setActive((index) => (index + 1) % slides.length)
     }, 5000)
     return () => window.clearInterval(timer)
-  }, [active, slides.length])
+  }, [active, paused, slides.length])
 
   return (
     <div className={className} role="region" aria-roledescription="carrusel" aria-label={label}>
@@ -603,6 +613,13 @@ function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slide
             ><span /></button>
           ))}
         </div>
+        <button className="hero-slide-toggle" type="button" onClick={() => setPaused((value) => !value)} aria-label={paused ? "Reanudar imágenes" : "Pausar imágenes"}>
+          {paused ? (
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3.5 16 10 6 16.5Z" /></svg>
+          ) : (
+            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="3" width="3.5" height="14" rx="0.8" /><rect x="11.5" y="3" width="3.5" height="14" rx="0.8" /></svg>
+          )}
+        </button>
       </div>}
     </div>
   )
