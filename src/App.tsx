@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react"
 import type { KeyboardEvent as ReactKeyboardEvent } from "react"
-import heroVaso from "./assets/hero-vaso-presion.webp"
 import heroSeparador from "./assets/hero-separador.webp"
+import heroValvula from "./assets/hero-valvula-gasoducto.webp"
 import heroUltravioleta from "./assets/hero-inspeccion-ultravioleta.webp"
 import imgRadiografia from "./assets/services/recipiente.jpg"
 import imgPenetrantes from "./assets/services/liquidos-penetrantes.webp"
@@ -549,9 +549,9 @@ function ServiceModal({
 }
 
 const heroSlides = [
-  { src: heroVaso, alt: "Vaso de presión industrial en taller" },
-  { src: heroSeparador, alt: "Separador de acero en taller industrial" },
   { src: heroUltravioleta, alt: "Inspección ultravioleta de un cigüeñal" },
+  { src: heroValvula, alt: "Válvula amarilla en una obra de gasoducto" },
+  { src: heroSeparador, alt: "Separador de acero en taller industrial" },
 ]
 
 function ImageCarousel({ slides = heroSlides, className = "hero-image hero-slideshow", label = "Inspecciones industriales", modal = false }: {
